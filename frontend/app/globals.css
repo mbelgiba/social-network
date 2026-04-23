@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-primary: #0D0D0D;
+  --bg-secondary: #1A1A1A;
+  --bg-accent: #161616;
+  --color-yellow: #F5C518;
+  --color-yellow-dark: #E6B800;
+  --color-yellow-bright: #FFD700;
+  --text-primary: #F0F0F0;
+  --text-secondary: #A0A0A0;
+  --border-color: #2A2A2A;
+  --border-accent: #F5C518;
+  --glow: 0 0 12px rgba(245, 197, 24, 0.3);
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.card {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  border-color: var(--border-accent);
+  box-shadow: var(--glow);
+}
+
+.btn-primary {
+  background-color: var(--color-yellow);
+  color: var(--bg-primary);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-yellow-bright);
+}
+
+.input-field {
+  background-color: var(--bg-accent);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 0.75rem;
+  border-radius: 4px;
+  outline: none;
+}
+
+.input-field:focus {
+  border-color: var(--border-accent);
+}
+
+.text-secondary {
+  color: var(--text-secondary);
+}
