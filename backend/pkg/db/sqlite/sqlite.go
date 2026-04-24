@@ -2,7 +2,6 @@ package sqlite
 
 import (
 	"database/sql"
-	"fmt"
 	"log"
 	"os"
 	"path/filepath"
@@ -13,45 +12,40 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-func NewDB(dbPath string) (*sql.DB, error) {
-	err := os.MkdirAll(filepath.Dir(dbPath), 0755)
+func InitDB(dataSourceName string) (*sql.DB, error) {
+	// Создаем директорию для базы данных, если её нет
+	dir := filepath.Dir(dataSourceName)
+	if err := os.MkdirAll(dir, 0755); err != nil {
+		return nil, err
+	}
+
+	db, err := sql.Open("sqlite3", dataSourceName)
 	if err != nil {
-		return nil, fmt.Errorf("failed to create db directory: %w", err)
+		return nil, err
 	}
 
-	db, err := sql.Open("sqlite3", dbPath+"?_foreign_keys=on")
-	if err != nil {
-		return nil, fmt.Errorf("failed to open database: %w", err)
+	if err = db.Ping(); err != nil {
+		return nil, err
 	}
 
-	if err := db.Ping(); err != nil {
-		return nil, fmt.Errorf("failed to ping database: %w", err)
-	}
-
-	if err := runMigrations(db); err != nil {
-		return nil, fmt.Errorf("migrations failed: %w", err)
-	}
-
-	return db, nil
-}
-
-func runMigrations(db *sql.DB) error {
+	// Запуск миграций
 	driver, err := sqlite3.WithInstance(db, &sqlite3.Config{})
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	m, err := migrate.NewWithDatabaseInstance(
 		"file://pkg/db/migrations/sqlite",
 		"sqlite3", driver)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	if err := m.Up(); err != nil && err != migrate.ErrNoChange {
-		return err
+		log.Printf("Migration failed: %v", err)
+		return nil, err
 	}
 
-	log.Println("Database migrations applied successfully")
-	return nil
+	log.Println("Database initialized and migrations applied successfully.")
+	return db, nil
 }

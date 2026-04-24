@@ -1,26 +1,33 @@
 FROM golang:1.21-alpine AS builder
 
-WORKDIR /app
-
-# Устанавливаем зависимости для cgo (нужно для go-sqlite3)
+# Устанавливаем gcc и libc-dev для компиляции SQLite (CGO)
 RUN apk add --no-cache gcc musl-dev
 
-COPY go.mod go.sum ./
-RUN go mod download
+WORKDIR /app
 
+# Копируем go.mod
+COPY go.mod ./
+
+# Копируем весь остальной код проекта
 COPY . .
 
-# Собираем приложение
-RUN CGO_ENABLED=1 GOOS=linux go build -o /app/server ./cmd/main.go
+# ТЕПЕРЬ скачиваем зависимости и генерируем go.sum
+RUN go mod tidy
+
+# Компилируем с CGO_ENABLED=1 и специальным флагом совместимости для новой версии Alpine
+RUN CGO_ENABLED=1 CGO_CFLAGS="-D_LARGEFILE64_SOURCE" GOOS=linux go build -o main ./cmd/server/main.go
 
 FROM alpine:latest
 
 WORKDIR /app
 
 # Копируем бинарник и миграции
-COPY --from=builder /app/server .
-COPY --from=builder /app/pkg/db/migrations ./pkg/db/migrations
+COPY --from=builder /app/main .
+COPY --from=builder /app/pkg/db/migrations/sqlite ./pkg/db/migrations/sqlite
+
+# Папка для базы данных
+RUN mkdir -p /app/data
 
 EXPOSE 8080
 
-CMD ["./server"]
+CMD ["./main"]
