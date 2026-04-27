@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-main: #0a0a0a;
+  --bg-card: rgba(20, 20, 20, 0.8);
+  --accent-red: #e11d48;
+  --accent-glow: rgba(225, 29, 72, 0.15);
+  --text-main: #f8fafc;
+  --text-dim: #94a3b8;
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  /* Мягкое красное свечение в углах */
+  background-image: 
+    radial-gradient(circle at 0% 0%, rgba(225, 29, 72, 0.05), transparent 600px),
+    radial-gradient(circle at 100% 100%, rgba(225, 29, 72, 0.03), transparent 600px);
+  background-attachment: fixed;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Изысканная стеклянная панель */
+.glass-panel {
+  background: var(--bg-card);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(225, 29, 72, 0.1);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-panel:hover {
+  border: 1px solid rgba(225, 29, 72, 0.3);
+  box-shadow: 0 10px 50px rgba(225, 29, 72, 0.05);
+}
+
+/* Кастомный скроллбар в красных тонах */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #262626;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-red);
+}

@@ -1,0 +1,13 @@
+# Секреты и БД
+social_network.db
+.env
+
+# Зависимости
+node_modules/
+backend/main
+backend/uploads/*
+
+# Next.js билд
+.next/
+out/
+build/
