@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 5, 5, 5;
+  --background-end-rgb: 0, 0, 0;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+  overflow-x: hidden;
+}
+
+/* Кастомный скроллбар Саурона */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #ff4500, #8b0000);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #ff6a00;
+}
+
+/* Класс для плавной прокрутки контента в панелях */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 69, 0, 0.2);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 69, 0, 0.5);
+}
+
+/* Анимация медленного вращения для Ока */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+
+/* Эффект свечения для важных элементов управления */
+.glow-orange {
+  box-shadow: 0 0 20px rgba(255, 69, 0, 0.15);
+}
+
+.glow-orange:hover {
+  box-shadow: 0 0 40px rgba(255, 69, 0, 0.3);
+}
+
+/* Стили для текстовых полей в темной теме */
+input, textarea {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.3s ease;
+}
+
+input:focus, textarea:focus {
+  border-color: rgba(255, 69, 0, 0.4);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* --- СТИЛИ ПЕРЕНЕСЕННЫЕ ИЗ LAYOUT ДЛЯ ИСПРАВЛЕНИЯ ОШИБКИ BUILD --- */
+
+::selection {
+  background-color: rgba(255, 69, 0, 0.3);
+  color: #ffffff;
+}
+
+/* Плавный скролл для всего приложения */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Отключение стандартных колец фокуса */
+:focus {
+  outline: none;
+}

@@ -1,0 +1,50 @@
+# --- СИСТЕМНЫЕ ФАЙЛЫ ---
+.DS_Store
+Thumbs.db
+*.swp
+*.log
+
+# --- БАЗА ДАННЫХ (Критически важно!) ---
+# Мы не храним саму базу данных в Git, чтобы не затирать данные друг друга
+*.db
+*.db-journal
+*.db-shm
+*.db-wal
+social_network.db
+
+# --- BACKEND (Go) ---
+backend/cmd/server/server
+backend/bin/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+# Если ты создаешь локальные конфиги
+backend/.env
+
+# --- FRONTEND (Node / Next.js) ---
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/build/
+frontend/.env*.local
+frontend/.vercel
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/.pnpm-debug.log*
+
+# --- ЗАГРУЗКИ (Media) ---
+# Игнорируем папку с загруженными аватарами и картинками, 
+# чтобы не хранить тысячи пользовательских фото в коде
+uploads/
+backend/uploads/
+frontend/public/uploads/
+
+# --- IDE / РЕДАКТОРЫ ---
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
